@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D Loyal Stay</title>
+
+<style>
+body{
+  margin:0;
+    font-family:Arial,sans-serif;
+      background:#f7f3ed;
+        color:#222;
+        }
+        .app{
+          max-width:500px;
+            margin:auto;
+              padding:25px 18px;
+              }
+              .card{
+                background:white;
+                  border-radius:18px;
+                    padding:25px;
+                      margin-top:30px;
+                        box-shadow:0 4px 15px #0001;
+                        }
+                        h1,h2{text-align:center;}
+                        .logo{
+                          text-align:center;
+                            font-size:28px;
+                              font-weight:bold;
+                                margin-top:20px;
+                                }
+                                input,button{
+                                  width:100%;
+                                    box-sizing:border-box;
+                                      padding:15px;
+                                        margin-top:12px;
+                                          border-radius:10px;
+                                            font-size:16px;
+                                            }
+                                            input{border:1px solid #ccc;}
+                                            button{
+                                              border:0;
+                                                background:#222;
+                                                  color:white;
+                                                  }
+                                                  .item{
+                                                    padding:15px 0;
+                                                      border-bottom:1px solid #ddd;
+                                                      }
+                                                      .price{color:#666;}
+                                                      .hidden{display:none;}
+                                                      .badge{
+                                                        background:#eee;
+                                                          padding:7px 12px;
+                                                            border-radius:20px;
+                                                            }
+                                                            </style>
+                                                            </head>
+
+                                                            <body>
+
+                                                            <div class="app">
+
+                                                            <div class="logo">D LOYAL STAY</div>
+
+                                                            <!-- WELCOME -->
+                                                            <div id="welcome" class="card">
+                                                              <h1>Welcome to ABC</h1>
+                                                                <p style="text-align:center;">
+                                                                    We're happy to have you with us.
+                                                                      </p>
+
+                                                                        <h3>May we know your name?</h3>
+
+                                                                          <input id="name" placeholder="Enter your name">
+
+                                                                            <button onclick="continueName()">Continue</button>
+
+                                                                              <p style="font-size:13px;text-align:center;color:#777;">
+                                                                                  Scanning this QR does not count as a visit.
+                                                                                      Visits count only after a paid bill is verified.
+                                                                                        </p>
+                                                                                        </div>
+
+
+                                                                                        <!-- PHONE -->
+                                                                                        <div id="phonePage" class="card hidden">
+                                                                                          <h2>Welcome <span id="customerName"></span> ❤️</h2>
+
+                                                                                            <p style="text-align:center;">
+                                                                                                Let's get you connected with ABC.
+                                                                                                  </p>
+
+                                                                                                    <input id="phone" type="tel" placeholder="Enter phone number">
+
+                                                                                                      <button onclick="openMenu()">Open ABC Menu</button>
+                                                                                                      </div>
+
+
+                                                                                                      <!-- MENU -->
+                                                                                                      <div id="menuPage" class="card hidden">
+
+                                                                                                        <h2>ABC Menu</h2>
+
+                                                                                                          <p>
+                                                                                                              Hi <b id="menuName"></b>!
+                                                                                                                  <span class="badge">0 verified visits</span>
+                                                                                                                    </p>
+
+                                                                                                                      <div class="item">
+                                                                                                                          <b>Burrata Garden Salad</b><br>
+                                                                                                                              <span class="price">₹380</span>
+                                                                                                                                  <button onclick="addItem('Burrata Garden Salad',380)">
+                                                                                                                                        Add
+                                                                                                                                            </button>
+                                                                                                                                              </div>
+
+                                                                                                                                                <div class="item">
+                                                                                                                                                    <b>Crispy Paneer Tikka</b><br>
+                                                                                                                                                        <span class="price">₹320</span>
+                                                                                                                                                            <button onclick="addItem('Crispy Paneer Tikka',320)">
+                                                                                                                                                                  Add
+                                                                                                                                                                      </button>
+                                                                                                                                                                        </div>
+
+                                                                                                                                                                          <div class="item">
+                                                                                                                                                                              <b>Artisanal Cappuccino</b><br>
+                                                                                                                                                                                  <span class="price">₹260</span>
+                                                                                                                                                                                      <button onclick="addItem('Artisanal Cappuccino',260)">
+                                                                                                                                                                                            Add
+                                                                                                                                                                                                </button>
+                                                                                                                                                                                                  </div>
+
+                                                                                                                                                                                                    <div class="item">
+                                                                                                                                                                                                        <b>Cold Brew Tonic</b><br>
+                                                                                                                                                                                                            <span class="price">₹220</span>
+                                                                                                                                                                                                                <button onclick="addItem('Cold Brew Tonic',220)">
+                                                                                                                                                                                                                      Add
+                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                            </div>
+
+                                                                                                                                                                                                                              <div id="cart"></div>
+
+                                                                                                                                                                                                                              </div>
+
+
+                                                                                                                                                                                                                              <!-- STAFF -->
+                                                                                                                                                                                                                              <div id="staffPage" class="card hidden">
+                                                                                                                                                                                                                                <h2>Staff Console</h2>
+
+                                                                                                                                                                                                                                  <p><b>Customer:</b> <span id="staffCustomer"></span></p>
+                                                                                                                                                                                                                                    <p><b>Bill:</b> ₹<span id="billAmount"></span></p>
+
+                                                                                                                                                                                                                                      <button onclick="generateBill()">Generate Bill</button>
+                                                                                                                                                                                                                                        <button onclick="markPaid()">Mark Bill Paid</button>
+
+                                                                                                                                                                                                                                          <div id="otpArea"></div>
+                                                                                                                                                                                                                                          </div>
+
+
+                                                                                                                                                                                                                                          <!-- VERIFIED -->
+                                                                                                                                                                                                                                          <div id="verifiedPage" class="card hidden">
+                                                                                                                                                                                                                                            <h2>🎉 Visit Verified!</h2>
+
+                                                                                                                                                                                                                                              <p style="text-align:center;">
+                                                                                                                                                                                                                                                  Your visit has been successfully verified.
+                                                                                                                                                                                                                                                    </p>
+
+                                                                                                                                                                                                                                                      <h3 style="text-align:center;">
+                                                                                                                                                                                                                                                          Verified visits: 1
+                                                                                                                                                                                                                                                            </h3>
+
+                                                                                                                                                                                                                                                              <div style="text-align:center;">
+                                                                                                                                                                                                                                                                  🎁 Reward unlocked
+                                                                                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                                                                                      <button onclick="location.reload()">Start Again</button>
+                                                                                                                                                                                                                                                                      </div>
+
+                                                                                                                                                                                                                                                                      </div>
+
+
+                                                                                                                                                                                                                                                                      <script>
+
+                                                                                                                                                                                                                                                                      let customer="";
+                                                                                                                                                                                                                                                                      let cartItems=[];
+                                                                                                                                                                                                                                                                      let total=0;
+                                                                                                                                                                                                                                                                      let otp="";
+
+                                                                                                                                                                                                                                                                      function show(id){
+                                                                                                                                                                                                                                                                        document.querySelectorAll(".card").forEach(x=>x.classList.add("hidden"));
+                                                                                                                                                                                                                                                                          document.getElementById(id).classList.remove("hidden");
+                                                                                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                                                                                          function continueName(){
+
+                                                                                                                                                                                                                                                                            let name=document.getElementById("name").value.trim();
+
+                                                                                                                                                                                                                                                                              if(!name){
+                                                                                                                                                                                                                                                                                  alert("Please enter your name.");
+                                                                                                                                                                                                                                                                                      return;
+                                                                                                                                                                                                                                                                                        }
+
+                                                                                                                                                                                                                                                                                          customer=name;
+
+                                                                                                                                                                                                                                                                                            document.getElementById("customerName").innerText=name;
+                                                                                                                                                                                                                                                                                              document.getElementById("menuName").innerText=name;
+                                                                                                                                                                                                                                                                                                document.getElementById("staffCustomer").innerText=name;
+
+                                                                                                                                                                                                                                                                                                  show("phonePage");
+                                                                                                                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                                                                                                                  function openMenu(){
+
+                                                                                                                                                                                                                                                                                                    let phone=document.getElementById("phone").value.trim();
+
+                                                                                                                                                                                                                                                                                                      if(phone.length < 10){
+                                                                                                                                                                                                                                                                                                          alert("Please enter a valid phone number.");
+                                                                                                                                                                                                                                                                                                              return;
+                                                                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                                                                  show("menuPage");
+                                                                                                                                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                                                                                                                                  function addItem(name,price){
+
+                                                                                                                                                                                                                                                                                                                    cartItems.push(name);
+                                                                                                                                                                                                                                                                                                                      total+=price;
+
+                                                                                                                                                                                                                                                                                                                        document.getElementById("cart").innerHTML=
+                                                                                                                                                                                                                                                                                                                            "<h3>Cart</h3>"+
+                                                                                                                                                                                                                                                                                                                                "<p>"+cartItems.join("<br>")+"</p>"+
+                                                                                                                                                                                                                                                                                                                                    "<p><b>Total: ₹"+total+"</b></p>"+
+                                                                                                                                                                                                                                                                                                                                        "<button onclick='placeOrder()'>Place Order</button>";
+                                                                                                                                                                                                                                                                                                                                        }
+
+                                                                                                                                                                                                                                                                                                                                        function placeOrder(){
+
+                                                                                                                                                                                                                                                                                                                                          if(cartItems.length===0){
+                                                                                                                                                                                                                                                                                                                                              alert("Your cart is empty.");
+                                                                                                                                                                                                                                                                                                                                                  return;
+                                                                                                                                                                                                                                                                                                                                                    }
+
+                                                                                                                                                                                                                                                                                                                                                      alert("Order confirmed — enjoy your food!");
+
+                                                                                                                                                                                                                                                                                                                                                        show("staffPage");
+
+                                                                                                                                                                                                                                                                                                                                                          document.getElementById("billAmount").innerText=total;
+                                                                                                                                                                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                                                                                                                                                                          function generateBill(){
+
+                                                                                                                                                                                                                                                                                                                                                            alert("Bill generated successfully.");
+                                                                                                                                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                                                                                                                                            function markPaid(){
+
+                                                                                                                                                                                                                                                                                                                                                              otp=Math.floor(1000+Math.random()*9000);
+
+                                                                                                                                                                                                                                                                                                                                                                document.getElementById("otpArea").innerHTML=
+                                                                                                                                                                                                                                                                                                                                                                    "<hr>"+
+                                                                                                                                                                                                                                                                                                                                                                        "<p><b>Customer OTP:</b> "+otp+"</p>"+
+                                                                                                                                                                                                                                                                                                                                                                            "<input id='verifyOtp' placeholder='Enter customer OTP'>"+
+                                                                                                                                                                                                                                                                                                                                                                                "<button onclick='verifyVisit()'>Verify Visit</button>";
+                                                                                                                                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                                                                                                                                function verifyVisit(){
+
+                                                                                                                                                                                                                                                                                                                                                                                  let entered=document.getElementById("verifyOtp").value;
+
+                                                                                                                                                                                                                                                                                                                                                                                    if(entered==otp){
+                                                                                                                                                                                                                                                                                                                                                                                        show("verifiedPage");
+                                                                                                                                                                                                                                                                                                                                                                                          }else{
+                                                                                                                                                                                                                                                                                                                                                                                              alert("Incorrect OTP.");
+                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                                                                                                                                                </script>
+
+                                                                                                                                                                                                                                                                                                                                                                                                </body>
+                                                                                                                                                                                                                                                                                                                                                                                                </html>
