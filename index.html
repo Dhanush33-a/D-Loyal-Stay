@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D Loyal Stay</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fa;
+  color:#222;
+}
+
+.container{
+  max-width:680px;
+  margin:30px auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+
+h1{
+  text-align:center;
+  font-size:38px;
+  margin:10px 0 25px;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+h3{
+  margin-bottom:8px;
+}
+
+p{
+  line-height:1.6;
+}
+
+input{
+  width:100%;
+  padding:17px;
+  border:2px solid #ddd;
+  border-radius:16px;
+  font-size:17px;
+  margin:10px 0 15px;
+}
+
+button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:16px;
+  background:#222;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.secondary{
+  background:#e9edf2;
+  color:#222;
+}
+
+.hidden{
+  display:none;
+}
+
+.welcome{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.note{
+  color:#666;
+  font-size:15px;
+}
+
+.menu-item{
+  border:2px solid #ddd;
+  border-radius:20px;
+  padding:20px;
+  margin:15px 0;
+}
+
+.price{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.selection{
+  margin-top:12px;
+  padding:10px;
+  border-radius:12px;
+  background:#eef7ee;
+  color:#176b25;
+  font-weight:bold;
+  text-align:center;
+}
+
+.order-bar{
+  position:sticky;
+  top:8px;
+  z-index:10;
+  background:#222;
+  color:white;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.order-bar button{
+  background:white;
+  color:#222;
+  margin-top:10px;
+}
+
+.status{
+  padding:15px;
+  border-radius:15px;
+  background:#f0f2f5;
+  margin:15px 0;
+}
+
+.success{
+  background:#e8f7eb;
+  color:#176b25;
+}
+
+.warning{
+  background:#fff4d8;
+  color:#805d00;
+}
+
+.small{
+  font-size:14px;
+  color:#666;
+}
+
+@media(max-width:600px){
+  .container{
+    margin:10px auto;
+    padding:12px;
+  }
+
+  .card{
+    padding:22px;
+    border-radius:22px;
+  }
+
+  h1{
+    font-size:32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- WELCOME -->
+<section id="welcomePage" class="card">
+  <h1>D LOYAL STAY</h1>
+
+  <h2>Welcome to ABC</h2>
+
+  <p class="welcome">
+    Welcome, my dear customer. We are happy to have you here.
+  </p>
+
+  <label><b>Your name</b></label>
+  <input id="customerName" placeholder="Enter your name">
+
+  <button onclick="continueCustomer()">Continue</button>
+
+  <p class="note">
+    Scanning this QR code does not count as a visit.
+    A visit is recorded only after the order is completed,
+    the bill is paid, and the visit is verified.
+  </p>
+</section>
+
+
+<!-- CUSTOMER WELCOME -->
+<section id="customerWelcome" class="card hidden">
+  <h1 id="welcomeCustomer"></h1>
+
+  <h2>Welcome to ABC.</h2>
+
+  <p class="welcome">
+    Enjoy your food and have a wonderful experience with us.
+  </p>
+
+  <button onclick="openMenu()">View ABC Menu</button>
+</section>
+
+
+<!-- MENU -->
+<section id="menuPage" class="card hidden">
+
+  <h2>ABC Menu</h2>
+
+  <p class="welcome" id="helloCustomer"></p>
+
+  <!-- PLACE ORDER AT TOP -->
+  <div class="order-bar">
+
+    <div>
+      <b id="topOrderCount">0 items selected</b>
+      <br>
+      <span id="topOrderTotal">Total: ₹0</span>
+    </div>
+
+    <button onclick="goToOrder()">
+      Place Order
+    </button>
+
+  </div>
+
+
+  <!-- ITEM 1 -->
+  <div class="menu-item">
+
+    <h3>Burrata Garden Salad</h3>
+
+    <p>Fresh salad with burrata.</p>
+
+    <div class="price">₹380</div>
+
+    <button onclick="addItem('Burrata Garden Salad',380)">
+      Add
+    </button>
+
+    <div id="count-BurrataGardenSalad"></div>
+
+  </div>
+
+
+  <!-- ITEM 2 -->
+  <div class="menu-item">
+
+    <h3>Crispy Paneer Tikka</h3>
+
+    <p>Crispy paneer with spices.</p>
+
+    <div class="price">₹320</div>
+
+    <button onclick="addItem('Crispy Paneer Tikka',320)">
+      Add
+    </button>
+
+    <div id="count-CrispyPaneerTikka"></div>
+
+  </div>
+
+
+  <!-- ITEM 3 -->
+  <div class="menu-item">
+
+    <h3>Artisanal Cappuccino</h3>
+
+    <p>Freshly prepared cappuccino.</p>
+
+    <div class="price">₹260</div>
+
+    <button onclick="addItem('Artisanal Cappuccino',260)">
+      Add
+    </button>
+
+    <div id="count-ArtisanalCappuccino"></div>
+
+  </div>
+
+
+  <!-- ITEM 4 -->
+  <div class="menu-item">
+
+    <h3>Cold Brew Tonic</h3>
+
+    <p>Refreshing cold coffee.</p>
+
+    <div class="price">₹220</div>
+
+    <button onclick="addItem('Cold Brew Tonic',220)">
+      Add
+    </button>
+
+    <div id="count-ColdBrewTonic"></div>
+
+  </div>
+
+</section>
+
+
+<!-- PHONE -->
+<section id="phonePage" class="card hidden">
+
+  <h2>Your order is ready</h2>
+
+  <p>
+    Enter your mobile number so we can connect this order
+    to your D Loyal Stay account and record eligible visits
+    and offers.
+  </p>
+
+  <p class="small">
+    We will never ask for your UPI PIN, card PIN,
+    bank password, or payment password.
+  </p>
+
+  <input
+    id="phoneNumber"
+    type="tel"
+    maxlength="10"
+    placeholder="10-digit mobile number"
+  >
+
+  <button onclick="submitOrder()">
+    Confirm Order
+  </button>
+
+</section>
+
+
+<!-- ORDER -->
+<section id="orderPage" class="card hidden">
+
+  <h2>Your Order</h2>
+
+  <div id="orderSummary"></div>
+
+  <button onclick="demoStaffPage()">
+    Send Order to Staff
+  </button>
+
+  <p class="small">
+    Demo mode: staff verification is being simulated.
+    In the real app, the staff system will be protected.
+  </p>
+
+</section>
+
+
+<!-- STAFF DEMO -->
+<section id="staffPage" class="card hidden">
+
+  <h2>Staff Console — Demo</h2>
+
+  <div class="status">
+    <b>Customer:</b>
+    <span id="staffCustomer"></span>
+    <br><br>
+
+    <b>Phone:</b>
+    <span id="staffPhone"></span>
+    <br><br>
+
+    <b>Bill:</b>
+    ₹<span id="billAmount">0</span>
+  </div>
+
+  <button onclick="generateBill()">
+    Generate Bill
+  </button>
+
+  <button onclick="markBillPaid()">
+    Mark Bill Paid
+  </button>
+
+  <div id="verificationSection"></div>
+
+</section>
+
+
+<!-- VERIFIED -->
+<section id="verifiedPage" class="card hidden">
+
+  <h1>Visit Verified ✅</h1>
+
+  <h2>Thank you, <span id="verifiedName"></span>!</h2>
+
+  <div class="status success">
+    Your eligible visit has been recorded.
+  </div>
+
+  <p>
+    Your loyalty visit count has been updated.
+  </p>
+
+  <button onclick="openMenu()">
+    Back to Menu
+  </button>
+
+</section>
+
+</div>
+
+
+<script>
+
+let customerName = "";
+let phoneNumber = "";
+
+let cart = {};
+
+let billPaid = false;
+
+const BUSINESS = "ABC";
+
+/*
+  BUSINESS SETTING
+
+  The hotel/café can later choose:
+  3 hours
+  4 hours
+  or another duration.
+
+  For now the demo uses 4 hours.
+*/
+const VISIT_COOLDOWN_HOURS = 4;
+
+
+/* ---------- PAGE CONTROL ---------- */
+
+function show(pageId){
+
+  const pages = [
+    "welcomePage",
+    "customerWelcome",
+    "menuPage",
+    "phonePage",
+    "orderPage",
+    "staffPage",
+    "verifiedPage"
+  ];
+
+  pages.forEach(function(id){
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(pageId).classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* ---------- CUSTOMER ---------- */
+
+function continueCustomer(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  if(name === ""){
+    alert("Please enter your name.");
+    return;
+  }
+
+  customerName = name;
+
+  document.getElementById("welcomeCustomer").innerText =
+    "Welcome " + customerName + " ❤️";
+
+  show("customerWelcome");
+}
+
+
+function openMenu(){
+
+  document.getElementById("helloCustomer").innerText =
+    "Hi " + customerName + "!";
+
+  show("menuPage");
+
+  updateCartDisplay();
+}
+
+
+/* ---------- MENU ---------- */
+
+function makeId(name){
+
+  return name.replace(/[^a-zA-Z0-9]/g,"");
+}
+
+
+function addItem(name,price){
+
+  if(!cart[name]){
+    cart[name] = {
+      price:price,
+      quantity:0
+    };
+  }
+
+  /*
+    ONE TAP = ONE MORE ITEM
+  */
+  cart[name].quantity++;
+
+  updateCartDisplay();
+}
+
+
+function updateCartDisplay(){
+
+  let totalItems = 0;
+  let total = 0;
+
+  Object.keys(cart).forEach(function(name){
+
+    const item = cart[name];
+
+    totalItems += item.quantity;
+    total += item.price * item.quantity;
+
+    const id = "count-" + makeId(name);
+
+    const box = document.getElementById(id);
+
+    if(box){
+
+      if(item.quantity > 0){
+
+        box.innerHTML =
+          "<div class='selection'>" +
+          "✓ Selected: " +
+          item.quantity +
+          "</div>";
+
+      }else{
+
+        box.innerHTML = "";
+
+      }
+    }
+  });
+
+
+  document.getElementById("topOrderCount").innerText =
+    totalItems + (totalItems === 1 ? " item selected" : " items selected");
+
+  document.getElementById("topOrderTotal").innerText =
+    "Total: ₹" + total;
+}
+
+
+/* ---------- PLACE ORDER ---------- */
+
+function calculateTotal(){
+
+  let total = 0;
+
+  Object.keys(cart).forEach(function(name){
+
+    total +=
+      cart[name].price *
+      cart[name].quantity;
+
+  });
+
+  return total;
+}
+
+
+function calculateItems(){
+
+  let count = 0;
+
+  Object.keys(cart).forEach(function(name){
+
+    count += cart[name].quantity;
+
+  });
+
+  return count;
+}
+
+
+function goToOrder(){
+
+  const items = calculateItems();
+
+  if(items === 0){
+
+    alert("Please select at least one item.");
+
+    return;
+  }
+
+  show("phonePage");
+}
+
+
+/* ---------- PHONE ---------- */
+
+function submitOrder(){
+
+  const phone =
+    document.getElementById("phoneNumber").value.trim();
+
+  if(!/^[6-9][0-9]{9}$/.test(phone)){
+
+    alert(
+      "Please enter a valid 10-digit Indian mobile number."
+    );
+
+    return;
+  }
+
+  phoneNumber = phone;
+
+  buildOrderSummary();
+
+  show("orderPage");
+}
+
+
+/* ---------- ORDER SUMMARY ---------- */
+
+function buildOrderSummary(){
+
+  let html = "";
+
+  Object.keys(cart).forEach(function(name){
+
+    const item = cart[name];
+
+    if(item.quantity > 0){
+
+      const amount =
+        item.price * item.quantity;
+
+      html +=
+        "<div class='status'>" +
+        "<b>" + name + "</b><br>" +
+        "Quantity: " + item.quantity +
+        "<br>" +
+        "₹" + amount +
+        "</div>";
+    }
+  });
+
+
+  html +=
+    "<div class='status'>" +
+    "<b>Total: ₹" +
+    calculateTotal() +
+    "</b>" +
+    "</div>";
+
+  document.getElementById("orderSummary").innerHTML =
+    html;
+}
+
+
+/* ---------- STAFF DEMO ---------- */
+
+function demoStaffPage(){
+
+  document.getElementById("staffCustomer").innerText =
+    customerName;
+
+  document.getElementById("staffPhone").innerText =
+    "******" + phoneNumber.slice(-4);
+
+  document.getElementById("billAmount").innerText =
+    calculateTotal();
+
+  show("staffPage");
+}
+
+
+function generateBill(){
+
+  alert(
+    "Bill generated successfully.\n\nAmount: ₹" +
+    calculateTotal()
+  );
+}
+
+
+function markBillPaid(){
+
+  billPaid = true;
+
+  document.getElementById("verificationSection").innerHTML =
+    "<div class='status success'>" +
+    "<b>Bill marked as paid.</b>" +
+    "<p>" +
+    "The customer can now verify this visit." +
+    "</p>" +
+    "</div>" +
+
+    "<button onclick='verifyVisitDemo()'>" +
+    "Verify Customer Visit" +
+    "</button>";
+}
+
+
+/* ---------- VISIT COOLDOWN ---------- */
+
+function getLastVisit(){
+
+  const key =
+    "dloyal_last_visit_" + BUSINESS;
+
+  return localStorage.getItem(key);
+}
+
+
+function saveVisit(){
+
+  const key =
+    "dloyal_last_visit_" + BUSINESS;
+
+  localStorage.setItem(
+    key,
+    Date.now().toString()
+  );
+}
+
+
+function canEarnVisit(){
+
+  const lastVisit =
+    getLastVisit();
+
+  if(!lastVisit){
+    return true;
+  }
+
+  const elapsed =
+    Date.now() - Number(lastVisit);
+
+  const cooldown =
+    VISIT_COOLDOWN_HOURS *
+    60 *
+    60 *
+    1000;
+
+  return elapsed >= cooldown;
+}
+
+
+function hoursRemaining(){
+
+  const lastVisit =
+    getLastVisit();
+
+  if(!lastVisit){
+    return 0;
+  }
+
+  const cooldown =
+    VISIT_COOLDOWN_HOURS *
+    60 *
+    60 *
+    1000;
+
+  const elapsed =
+    Date.now() - Number(lastVisit);
+
+  const remaining =
+    cooldown - elapsed;
+
+  if(remaining <= 0){
+    return 0;
+  }
+
+  return Math.ceil(
+    remaining / (60 * 60 * 1000)
+  );
+}
+
+
+/* ---------- VERIFY VISIT DEMO ---------- */
+
+function verifyVisitDemo(){
+
+  if(!billPaid){
+
+    alert("The bill must be paid first.");
+
+    return;
+  }
+
+
+  if(!canEarnVisit()){
+
+    const hours =
+      hoursRemaining();
+
+    document.getElementById("verificationSection").innerHTML =
+
+      "<div class='status warning'>" +
+      "<b>Visit not counted again yet.</b>" +
+      "<p>" +
+      "This customer already received an eligible visit recently." +
+      "</p>" +
+      "<p>" +
+      "The next loyalty visit can be counted after approximately " +
+      hours +
+      " hour(s)." +
+      "</p>" +
+      "</div>";
+
+    return;
+  }
+
+
+  saveVisit();
+
+  document.getElementById("verifiedName").innerText =
+    customerName;
+
+  show("verifiedPage");
+}
+
+</script>
+
+</body>
+  </html>
